@@ -1,7 +1,11 @@
 *: primary key
 #: foreign key
 
-Item(itemId*, name, category, currently, buy_price, first_bid#, number_of_bids, started, ends, seller#, description)
+Item(itemId*, name, currently, buy_price, first_bid, number_of_bids, started, ends, seller#, description)
+
+Category(catId*, category)
+
+ItemCategory(itemId#*, catId#*)
 
 Bid(bidId*, bidder#, time, amount)
 
