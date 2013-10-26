@@ -22,33 +22,20 @@ CREATE TABLE User(
 );
 
 
-CREATE TABLE Category(
-  Category        VARCHAR(255)  ,
-  PRIMARY KEY (Category)
-);
-
 CREATE TABLE ItemCategory(
-  CategoryId      INT           NOT NULL,
+  Category        VARCHAR(255)  NOT NULL,
   ItemId          INT           NOT NULL,
   /*PRIMARY KEY (ItemId, CategoryId),*/
-  FOREIGN KEY (CategoryId) REFERENCES Category(CategoryId),
   FOREIGN KEY (ItemId) REFERENCES Item(ItemId)
 );
 
 CREATE TABLE Bid(
-  BidId           INT           NOT NULL,
+  ItemId          INT           NOT NULL,
   Bidder          VARCHAR(255)  NOT NULL,
   Time            DATETIME      ,
   Amount          FLOAT         ,
-  PRIMARY KEY (BidId),
-  FOREIGN KEY (Bidder) REFERENCES User(UserId)
-);
-
-CREATE TABLE ItemBid(
-  ItemId          INT           NOT NULL,
-  BidId           INT           NOT NULL,
-  FOREIGN KEY (ItemId) REFERENCES Item(ItemId),
-  FOREIGN KEY (BidId) REFERENCES Bid(BidId)
+  FOREIGN KEY (Bidder) REFERENCES User(UserId),
+  FOREIGN KEY (ItemId REFERENCES Item(ItemId)
 );
 
 
