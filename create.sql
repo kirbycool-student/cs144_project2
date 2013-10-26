@@ -5,23 +5,20 @@ CREATE TABLE Item(
   BuyPrice        FLOAT                 ,
   FirstBid        FLOAT         NOT NULL,
   NumberOfBids    INT           NOT NULL,
-  Started         DATETIME      NOT NULL,
-  Ends            DATETIME      NOT NULL,
-  PRIMARY KEY (ItemId)
-);
-
-CREATE TABLE Location(
   Location        VARCHAR(255)  NOT NULL,
   Country         VARCHAR(255)  NOT NULL,
-  PRIMARY KEY (Location)
+  Started         DATETIME      NOT NULL,
+  Ends            DATETIME      NOT NULL,
+  Description     TEXT          NOT NULL,
+  PRIMARY KEY (ItemId)
 );
 
 CREATE TABLE User(
   UserId          VARCHAR(255)  NOT NULL,
   Rating          INT           NOT NULL,
-  Location        VARCHAR(255)  NOT NULL,
-  PRIMARY KEY (UserId),
-  FOREIGN KEY (Location) REFERENCES Location(Location)
+  Location        VARCHAR(255)          ,
+  Country         VARCHAR(255)	        ,
+  PRIMARY KEY (UserId)
 );
 
 

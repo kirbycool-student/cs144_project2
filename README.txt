@@ -1,7 +1,8 @@
 *: primary key
 #: foreign key
 
-Item(itemId*, name, currently, buy_price, first_bid, number_of_bids, started, ends, seller#, description)
+Item(itemId*, name, currently, buy_price, first_bid, number_of_bids, location,
+country, started, ends, seller#, description)
 
 Category(catId*, category)
 
@@ -11,6 +12,4 @@ Bid(bidId*, bidder#, time, amount)
 
 ItemBid(itemId#, bidId#)
 
-User(userId*, rating, location#)
-
-Location(location*, country)
+User(userId*, rating, location, country)
