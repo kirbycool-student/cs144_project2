@@ -182,13 +182,90 @@ class MyParser {
         
         /* Fill in code here (you will probably need to write auxiliary
             methods). */
-        
+        recursiveDescent(doc.getDocumentElement());
         
         
         /**************************************************************/
         
     }
-    
+
+   public static void recursiveDescent(Element e) {
+	if(e.getTagName() == "Items")
+	{
+	    Element [] next = getElementsByTagNameNR(e, "Item");
+	    recursiveDescent(next[0]);
+	}
+	else if(e.getTagName() == "Item")
+	{
+	   // org.w3c.dom.Attr id = e.getAttributeNode("ItemID"); //REMOVE
+	    printToCSV("Item.csv", (e.getAttributeNode("ItemID")).getValue());
+	    
+	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Name"));
+	    printToCSV("Item.csv", strip(getElementTextByTagNameNR(e, "Currently")));
+	    printToCSV("Item.csv", strip(getElementTextByTagNameNR(e, "Buy_Price")));
+	    printToCSV("Item.csv", strip(getElementTextByTagNameNR(e, "First_Bid")));
+	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Number_of_Bids"));
+	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Location"));
+	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Country"));
+	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Started"));
+	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Ends"));
+	    printEndToCSV("Item.csv", getElementTextByTagNameNR(e, "Description"));
+
+	    recursiveDescent(getElementByTagNameNR(e, "Seller");
+	}
+	else if(e.getTagName() == "Seller")
+	{
+	    printToCSV("User.csv", (e.getAttributeNode("UserID")).getValue());
+	    printToCSV("User.csv", (e.getAttributeNode("Rating")).getValue());
+	    printToCSV("User.csv", (e.getAttributeNode("UserID")).getValue());
+	}
+
+
+
+/*	if(level<=1)
+	{
+	    
+	    org.w3c.dom.NodeList nlist = n.getChildNodes();
+	    for(int i = 0; i < nlist.getLength(); i++)
+		recursiveDescent(nlist.item(i), level+1);
+	}
+
+	Document doc = (Document)n;
+	Element e = doc.getDocumentElement();
+	printToCSV("hello.csv", getElementTextByTagNameNR(e, "ItemID"));
+
+
+*/
+    }
+
+   public static void printToCSV(String filename, String text)
+   {
+        Writer test = null;
+	try {
+            test = new BufferedWriter(new OutputStreamWriter(
+                      new FileOutputStream(filename, true), "utf-8"));
+        test.write(text + ",");
+	} catch (IOException ex) {
+	    System.out.println(ex);
+	} finally {
+            try {test.close();} catch (Exception ex) {}
+	}
+   }
+
+   public static void printEndToCSV(String filename, String text)
+   {
+        Writer test = null;
+	try {
+            test = new BufferedWriter(new OutputStreamWriter(
+                      new FileOutputStream(filename, true), "utf-8"));
+        test.write(text + "\n");
+	} catch (IOException ex) {
+	    System.out.println(ex);
+	} finally {
+            try {test.close();} catch (Exception ex) {}
+	}
+   }
+
     public static void main (String[] args) {
         if (args.length == 0) {
             System.out.println("Usage: java MyParser [file] [file] ...");
