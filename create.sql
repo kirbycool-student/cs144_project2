@@ -1,15 +1,15 @@
 CREATE TABLE Item(
   ItemId          INT           NOT NULL,
-  Name            VARCHAR(255)  NOT NULL,
-  Currently       FLOAT         NOT NULL,
+  Name            VARCHAR(255)  ,
+  Currently       FLOAT         ,
   BuyPrice        FLOAT                 ,
-  FirstBid        FLOAT         NOT NULL,
-  NumberOfBids    INT           NOT NULL,
-  Location        VARCHAR(255)  NOT NULL,
-  Country         VARCHAR(255)  NOT NULL,
-  Started         DATETIME      NOT NULL,
-  Ends            DATETIME      NOT NULL,
-  Description     TEXT          NOT NULL,
+  FirstBid        FLOAT         ,
+  NumberOfBids    INT           ,
+  Location        VARCHAR(255)  ,
+  Country         VARCHAR(255)  ,
+  Started         DATETIME      ,
+  Ends            DATETIME      ,
+  Description     TEXT          ,
   PRIMARY KEY (ItemId)
 );
 
@@ -24,7 +24,7 @@ CREATE TABLE User(
 
 CREATE TABLE Category(
   CategoryId      INT           NOT NULL,
-  Category        VARCHAR(255)  NOT NULL,
+  Category        VARCHAR(255)  ,
   PRIMARY KEY (CategoryId)
 );
 
@@ -39,8 +39,8 @@ CREATE TABLE ItemCategory(
 CREATE TABLE Bid(
   BidId           INT           NOT NULL,
   Bidder          VARCHAR(255)  NOT NULL,
-  Time            DATETIME      NOT NULL,
-  Amount          FLOAT         NOT NULL,
+  Time            DATETIME      ,
+  Amount          FLOAT         ,
   PRIMARY KEY (BidId),
   FOREIGN KEY (Bidder) REFERENCES User(UserId)
 );
