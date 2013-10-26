@@ -16,6 +16,21 @@ for file in *.csv do
   sort file | uniq > file
 done
 
+prevUserId=""
+prevLine=""
+while read line
+do
+    userId=$(echo $line | cut -f1 -d",")
+    if [ "$userId" != "$prevUserId" ]; then
+      if [ "$prevLine" != "" ]; then
+        echo "$prevLine"
+      fi
+    fi
+    prevUserId=$userId
+    prevLine=$line
+done < user.csv
+echo "$prevLine"
+
 
 # Run the load.sql batch file to load the data
 mysql CS144 < load.sql
