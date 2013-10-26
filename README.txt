@@ -2,14 +2,10 @@
 #: foreign key
 
 Item(itemId*, name, currently, buy_price, first_bid, number_of_bids, location,
-country, started, ends, seller#, description)
+country, started, ends, description)
 
-Category(catId*, category)
+ItemCategory(category*, itemID*#)
 
-ItemCategory(itemId#*, catId#*)
-
-Bid(bidId*, bidder#, time, amount)
-
-ItemBid(itemId#, bidId#)
+Bid(itemId*#, bidder*#, time*, amount*)
 
 User(userId*, rating, location, country)
