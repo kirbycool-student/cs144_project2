@@ -45,9 +45,9 @@ class MyParser {
     
     static final String columnSeparator = "|*|";
     static DocumentBuilder builder;
-    static ArrayList<String> categories = new ArrayList<String>();
-    static int bidIter = 0;
-    static String itemID;
+//REMOVE    static ArrayList<String> categories = new ArrayList<String>();
+//REMOVE    static int bidIter = 0;
+    static String itemID; //used to store itemID when we move deeper in tree
     
     static final String[] typeName = {
 	"none",
@@ -198,27 +198,43 @@ class MyParser {
 	bid.delete();
 	File itembid = new File("ItemBid.csv");
 	itembid.delete();
-*/
+*/ //REMOVE
         recursiveDescent(doc.getDocumentElement());
         
         /**************************************************************/
         
     }
 
+/* Recursive Descent goes through the DOM representation of the element tree
+ * in a depth first manner. It calls printToCSV to print the entries to their
+ * respective files.
+ */
+
    public static void recursiveDescent(Element e) {
+
+//Top of the tree, pulls out an array of item elements and calls itself 
+//recursively on each one.
 	if(e.getTagName() == "Items")
 	{
 	    Element [] next = getElementsByTagNameNR(e, "Item");
 	    for(int i = 0; i < next.length; i++)
 		recursiveDescent(next[i]);
 	}
+
+//Each auction item element
 	else if(e.getTagName() == "Item")
 	{
 	    itemID = (e.getAttributeNode("ItemID")).getValue();
+
+//Deal with seller information
 	    recursiveDescent(getElementByTagNameNR(e, "Seller"));
+	    printToCSV("User.csv", getElementTextByTagNameNR(e, "Location"), true, false);
+	    printToCSV("User.csv", getElementTextByTagNameNR(e, "Country"), true, true);
+
+//Deal with Bids information
 	    recursiveDescent(getElementByTagNameNR(e, "Bids"));
 	    
-
+//Print to the Item.csv all of the entries.
 	    printToCSV("Item.csv", itemID, false, false);
 	    
 	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Name"), true, false);
@@ -232,24 +248,31 @@ class MyParser {
 	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Ends"), false, false);
 	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Description"), true, true);
 
+//Get all the categories for the item and then handle them individually
 	    Element [] next = getElementsByTagNameNR(e, "Category");
 	    for(int i = 0; i < next.length; i++)
 		recursiveDescent(next[i]);
 
 	}
+
+//Each seller element, just prints all the entries to User.csv. Seller has no
+//location or country tags so we print blank entries to the csv.
 	else if(e.getTagName() == "Seller")
 	{
 	    printToCSV("User.csv", (e.getAttributeNode("UserID")).getValue(), true, false);
 	    printToCSV("User.csv", (e.getAttributeNode("Rating")).getValue(), false, false);
-	    printToCSV("User.csv", "", true, false);
-	    printToCSV("User.csv", "", true, true);
 	}
+
+//Bids Element, just pull out an array of the bids and handle them individually
 	else if(e.getTagName() == "Bids")
 	{
 	    Element [] next = getElementsByTagNameNR(e, "Bid");
 	    for(int i = 0; i < next.length; i++)
 		recursiveDescent(next[i]);
 	}
+
+//Bid element, print to the Bid.csv all the entries, and handle the bidder 
+//recursively
 	else if(e.getTagName() == "Bid")
 	{
 	    recursiveDescent(getElementByTagNameNR(e, "Bidder"));
@@ -262,8 +285,10 @@ class MyParser {
 	    printToCSV("ItemBid.csv", itemID, false, false);
 	    printToCSV("ItemBid.csv", Integer.toString(bidIter), false, true);
 	    bidIter++;
-*/
+*/ //REMOVE
 	}
+
+//Bidder element, print to the User.csv all the entries
 	else if(e.getTagName() == "Bidder")
 	{
 	    printToCSV("User.csv", (e.getAttributeNode("UserID")).getValue(), true, false);
@@ -271,6 +296,8 @@ class MyParser {
 	    printToCSV("User.csv", getElementTextByTagNameNR(e, "Location"), true, false);
 	    printToCSV("User.csv", getElementTextByTagNameNR(e, "Country"), true, true);
 	}
+
+//Category element, print to ItemCategory.csv the two entries
 	else if(e.getTagName() == "Category")
 	{
 /*	    int index = categories.indexOf(getElementText(e));
@@ -281,10 +308,12 @@ class MyParser {
 		printToCSV("Category.csv", Integer.toString(index), false, false);
 		printToCSV("Category.csv", getElementText(e), true, true);
 	    }
-*/
+*/ //REMOVE
 	    printToCSV("ItemCategory.csv", getElementText(e), true, false);
 	    printToCSV("ItemCategory.csv", itemID, false, true);
 	}
+
+//SOMEONE DUN FUCKED UP
 	else
 	{
 	    System.out.println("SOMETHING FUCKED UP\n");
@@ -292,6 +321,12 @@ class MyParser {
 	}
     }
 
+//Used to print the String text to the csv given by the String filename, with
+//boolean string being true if the text must be enclosed by quotation marks
+//and boolean end being true if the text is the last value in its entry and
+//must be terminated with a newline character. Also handles putting in
+//backslashes in front of quotation marks and original backslashes when boolean 
+//string is true.
    public static void printToCSV(String filename, String text, boolean string, boolean end)
    {
         Writer file = null;
@@ -319,7 +354,7 @@ class MyParser {
 	}
    }
 
-   public static void printEndToCSV(String filename, String text, boolean string)
+/*   public static void printEndToCSV(String filename, String text, boolean string)
    {
         Writer test = null;
 	try {
@@ -340,7 +375,7 @@ class MyParser {
             try {test.close();} catch (Exception ex) {}
 	}
    }
-
+*/ //REMOVE
 
    public static void main (String[] args) {
         if (args.length == 0) {
