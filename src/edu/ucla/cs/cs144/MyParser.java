@@ -246,6 +246,8 @@ class MyParser {
 	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Country"), true, false);
 	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Started"), false, false);
 	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Ends"), false, false);
+
+	    printToCSV("Item.csv", ((getElementByTagNameNR(e, "Seller")).getAttributeNode("UserID")).getValue(), true, false);
 	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Description"), true, true);
 
 //Get all the categories for the item and then handle them individually
