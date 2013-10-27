@@ -1,3 +1,11 @@
+CREATE TABLE User(
+  UserId          VARCHAR(255)  NOT NULL,
+  Rating          INT           NOT NULL,
+  Location        VARCHAR(255)          ,
+  Country         VARCHAR(255)	        ,
+  PRIMARY KEY (UserId)
+);
+
 CREATE TABLE Item(
   ItemId          INT           NOT NULL,
   Name            VARCHAR(255)          ,
@@ -13,14 +21,6 @@ CREATE TABLE Item(
   Description     TEXT                  ,
   PRIMARY KEY (ItemId),
   FOREIGN KEY (Seller) REFERENCES User(UserId)
-);
-
-CREATE TABLE User(
-  UserId          VARCHAR(255)  NOT NULL,
-  Rating          INT           NOT NULL,
-  Location        VARCHAR(255)          ,
-  Country         VARCHAR(255)	        ,
-  PRIMARY KEY (UserId)
 );
 
 

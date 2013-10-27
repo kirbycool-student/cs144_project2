@@ -22,22 +22,22 @@ done
 
 echo "Fixing User"
 
-prevUserId=""
-prevLine=""
-while read line
-do
-    userId=$(echo $line | cut -f1 -d",")
-    if [ "$userId" != "$prevUserId" ]; then
-      if [ "$prevLine" != "" ]; then
-        echo "$prevLine" >> temp
-      fi
-    fi
-    prevUserId=$userId
-    prevLine=$line
-done < User.csv
-echo "$prevLine" >> temp
-rm User.csv
-mv temp User.csv
+#prevUserId=""
+#prevLine=""
+#while read line
+#do
+#    userId=$(echo $line | cut -f1 -d",")
+#    if [ "$userId" != "$prevUserId" ]; then
+#      if [ "$prevLine" != "" ]; then
+#        echo "$prevLine" >> temp
+#      fi
+#    fi
+#    prevUserId=$userId
+#    prevLine=$line
+#done < User.csv
+#echo "$prevLine" >> temp
+#rm User.csv
+#mv temp User.csv
 
 echo "Loading"
 
