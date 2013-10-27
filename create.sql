@@ -9,8 +9,10 @@ CREATE TABLE Item(
   Country         VARCHAR(255)          ,
   Started         DATETIME              ,
   Ends            DATETIME              ,
+  Seller          VARCHAR(255)          ,
   Description     TEXT                  ,
-  PRIMARY KEY (ItemId)
+  PRIMARY KEY (ItemId),
+  FOREIGN KEY (Seller) REFERENCES User(UserId)
 );
 
 CREATE TABLE User(
