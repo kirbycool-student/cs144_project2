@@ -244,8 +244,8 @@ class MyParser {
 	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Number_of_Bids"), false, false);
 	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Location"), true, false);
 	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Country"), true, false);
-	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Started"), false, false);
-	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Ends"), false, false);
+	    printToCSV("Item.csv", formatDate(getElementTextByTagNameNR(e, "Started")), false, false);
+	    printToCSV("Item.csv", formatDate(getElementTextByTagNameNR(e, "Ends")), false, false);
 
 	    printToCSV("Item.csv", ((getElementByTagNameNR(e, "Seller")).getAttributeNode("UserID")).getValue(), true, false);
 	    printToCSV("Item.csv", getElementTextByTagNameNR(e, "Description"), true, true);
@@ -280,7 +280,7 @@ class MyParser {
 	    recursiveDescent(getElementByTagNameNR(e, "Bidder"));
 	    printToCSV("Bid.csv", itemID, false, false);
 	    printToCSV("Bid.csv", ((getElementByTagNameNR(e, "Bidder")).getAttributeNode("UserID")).getValue(), true, false);
-	    printToCSV("Bid.csv", getElementTextByTagNameNR(e, "Time"), false, false);
+	    printToCSV("Bid.csv", formatDate(getElementTextByTagNameNR(e, "Time")), false, false);
 	    printToCSV("Bid.csv", strip(getElementTextByTagNameNR(e, "Amount")), false, true);
 
 /*
@@ -355,6 +355,21 @@ class MyParser {
             try {file.close();} catch (Exception ex) {}
 	}
    }
+
+    public static String formatDate(String indate)
+    {
+	SimpleDateFormat informat = new SimpleDateFormat("MMM-dd-yy HH:mm:ss");
+	SimpleDateFormat outformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	try{
+	Date started = informat.parse(indate);
+	return outformat.format(started);
+	    }
+	catch(ParseException a) {
+		System.err.println("Caught IOException: " + a.getMessage());
+		}
+	System.exit(1);
+	return "SHOULD NEVER DO THIS";
+    }
 
 /*   public static void printEndToCSV(String filename, String text, boolean string)
    {
