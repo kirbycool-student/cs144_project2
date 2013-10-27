@@ -12,9 +12,15 @@ ant
 ant run-all
 
 # If the Java code does not handle duplicate removal, do this now
-for file in *.csv do
-  sort file | uniq > file
+echo "Sorting files"
+for file in *.csv; do
+  echo "$file"
+  sort $file | uniq >> temp
+  rm $file
+  mv temp $file
 done
+
+echo "Fixing User"
 
 prevUserId=""
 prevLine=""
@@ -23,14 +29,17 @@ do
     userId=$(echo $line | cut -f1 -d",")
     if [ "$userId" != "$prevUserId" ]; then
       if [ "$prevLine" != "" ]; then
-        echo "$prevLine"
+        echo "$prevLine" >> temp
       fi
     fi
     prevUserId=$userId
     prevLine=$line
-done < user.csv
-echo "$prevLine"
+done < User.csv
+echo "$prevLine" >> temp
+rm User.csv
+mv temp User.csv
 
+echo "Loading"
 
 # Run the load.sql batch file to load the data
 mysql CS144 < load.sql

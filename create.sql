@@ -35,7 +35,7 @@ CREATE TABLE Bid(
   Time            DATETIME      ,
   Amount          FLOAT         ,
   FOREIGN KEY (Bidder) REFERENCES User(UserId),
-  FOREIGN KEY (ItemId REFERENCES Item(ItemId)
+  FOREIGN KEY (ItemId) REFERENCES Item(ItemId)
 );
 
 
