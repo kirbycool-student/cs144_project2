@@ -18,7 +18,7 @@ CREATE TABLE Item(
   Started         DATETIME              ,
   Ends            DATETIME              ,
   Seller          VARCHAR(255)          ,
-  Description     TEXT                  ,
+  Description     VARCHAR(4000)         ,
   PRIMARY KEY (ItemId),
   FOREIGN KEY (Seller) REFERENCES User(UserId)
 );

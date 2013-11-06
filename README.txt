@@ -1,3 +1,5 @@
+Partner: Kirby Cool 703-892-301
+
 *: primary key
 #: foreign key
 
