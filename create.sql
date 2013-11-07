@@ -9,9 +9,9 @@ CREATE TABLE User(
 CREATE TABLE Item(
   ItemId          INT           NOT NULL,
   Name            VARCHAR(255)          ,
-  Currently       FLOAT                 ,
-  BuyPrice        FLOAT                 ,
-  FirstBid        FLOAT                 ,
+  Currently       DECIMAL(8,2)                ,
+  BuyPrice        DECIMAL(8,2)                 ,
+  FirstBid        DECIMAL(8,2)                 ,
   NumberOfBids    INT                   ,
   Location        VARCHAR(255)          ,
   Country         VARCHAR(255)          ,
@@ -35,7 +35,7 @@ CREATE TABLE Bid(
   ItemId          INT           NOT NULL,
   Bidder          VARCHAR(255)  NOT NULL,
   Time            DATETIME      ,
-  Amount          FLOAT         ,
+  Amount          DECIMAL(8,2)         ,
   FOREIGN KEY (Bidder) REFERENCES User(UserId),
   FOREIGN KEY (ItemId) REFERENCES Item(ItemId)
 );
